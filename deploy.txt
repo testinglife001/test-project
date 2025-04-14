@@ -1,0 +1,49 @@
+[] at backend
+    npm run dev
+[] create file
+    vercel.json
+[] create git repository
+[] github > github profile > repositories > new
+    https://github.com/testinglife001/demo-deploy 
+    …or create a new repository on the command line
+[] echo "# demo-deploy" >> README.md
+[] git init
+[] git add README.md
+[] git commit -m "first commit"
+[] git branch -M main
+[] git remote add origin https://github.com/testinglife001/demo-deploy.git
+[] git push -u origin main
+...
+[] go to vercel 
+[] vercel > dashboard > add new > project > import git repository
+[] configure project 
+[] project name demo-deploy-api
+[] delete Client_URL value 
+[] copy .env file text to environment variables on configure project
+[] set NODE_ENV value production
+[] leave Client_URL empty
+[] then deploy
+[] continue to dashboard
+...
+[] in dashboard > Domains 
+[] copy url from domains newly opened tap
+[] at frontend in server.js file    
+    backend_url = "http://localhost:8000/api";
+    to
+    backend_url = "(paste copied url)/api";
+    correct something like backend_url = "https://demo-deploy-api-(***).vercel.app/api";
+[] at frontend in newRequest.js file   
+    correct baseURL: "http://localhost:8000/api",
+[] vs code left hand side SOURCE CONTROL
+    commit 'backend deployed'
+    commit & push
+[] go to vercel dashboard > add new > project > import git repository
+[] configure project
+[] project name demo-deploy-frontend
+[] deploy
+[] continue to dashboard
+[] in dashboard > Domains 
+[] copy url from domains newly opened tap
+[] go to dashboard > demo-deploy-api > settings > environment variables 
+[] edit Client_URL
+[] paste copied url     
