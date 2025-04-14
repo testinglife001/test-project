@@ -6,7 +6,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { signInFail,signInStart,signInSuccess} from '../../App/feature/user/userSlice.js'
 import { useDispatch, useSelector } from 'react-redux'
-import { backend_url } from '../../server.js'
+import { backend_url } from '../server.js'
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
