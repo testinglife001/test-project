@@ -18,7 +18,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const corsConfig = {
-  origin: process.env.Client_URL,
+  // origin: process.env.Client_URL,
+  origin: 'https://test-project-client-red.vercel.app',
   credentials: true,
   method: ["GET", "POST", "PUT", "DELETE"],
 };

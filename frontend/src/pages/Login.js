@@ -2,15 +2,26 @@ import React, { useState } from "react";
  import "./Login.css";
 //import axios from "axios";
 import newRequest from "../utils/newRequest";
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { signInFail,signInStart,signInSuccess} from '../../App/feature/user/userSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { backend_url } from '../../server.js'
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate();
+
+  const data={
+    email,
+    password,
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,13 +30,27 @@ const Login = () => {
 
     try {
         // await axios.post(`${backend_url}/user/login`,data, { withCredentials: true })
-        const res = await newRequest.post("/user/login", { username, password });
-         console.log(res.data);
-         localStorage.setItem("user", JSON.stringify(res.data));
-        navigate("/"); 
+        // const res = await newRequest.post("/user/login", data, { withCredentials: true });
+        // console.log(res.data);
+        // localStorage.setItem("user", JSON.stringify(res.data));
+        // navigate("/");
+        setLoading(true)
+        await axios.post(`${backend_url}/user/login`,
+          data, { withCredentials: true }
+        ).then((res)=>{
+          setLoading(false)
+        toast.success(res.data.message)
+        console.log(res.data)
+        navigate('/')
+        }).catch((error)=>{
+         
+          toast.error(error.response.data.message)
+          
+        
+        }) 
 
     } catch (error) {
-         setError(error.response.data);
+        // setError(error.response.data);
         console.log(error);
     }
 
@@ -49,13 +74,13 @@ const Login = () => {
            onSubmit={handleSubmit}  
           >
 
-          <label for="inputUsername" className="sr-only">Username</label>
-          <input id="inputUsername" className="form-control" 
-            name="username"
-            type="text"
-            placeholder="john doe"
-            value={username} 
-             onChange = { e => setUsername(e.target.value) }
+          <label for="inputEmail" className="sr-only">Email</label>
+          <input id="inputEmail" className="form-control" 
+            name="email"
+            type="email"
+            placeholder="john@doe.com"
+            value={email} 
+             onChange = { e => setEmail(e.target.value) }
             required autofocus 
             />
           <label for="inputPassword" className="sr-only">Password</label>
